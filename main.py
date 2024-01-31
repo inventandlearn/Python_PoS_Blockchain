@@ -1,7 +1,7 @@
 from Transaction import Transaction
+from Wallet import Wallet
 
-
-# Script which instantiates Transaction class
+# Script which instantiates Transaction class and Wallet class.
 if __name__ == '__main__':
 
     sender = 'sender'
@@ -10,4 +10,7 @@ if __name__ == '__main__':
     type = 'TRANSFER'
 
     transaction = Transaction(sender, receiver, amount, type)
+    wallet = Wallet()
+    signature = wallet.sign(transaction.toJSON())
+    transaction.sign(signature)
     print(transaction.toJSON())
