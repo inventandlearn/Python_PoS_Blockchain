@@ -1,7 +1,7 @@
 from Transaction import Transaction
 from Wallet import Wallet
 
-# Script which instantiates Transaction class and Wallet class.
+# Script which instantiates Transaction class and Wallet class. Also validates if signature is by originator of transaction or not.
 if __name__ == '__main__':
 
     sender = 'sender'
@@ -13,4 +13,7 @@ if __name__ == '__main__':
     wallet = Wallet()
     signature = wallet.sign(transaction.toJSON())
     transaction.sign(signature)
-    print(transaction.toJSON())
+
+    signatureValid = Wallet.signatureValid(transaction.toJSON(), signature, wallet.publicKeyString())
+    print(signatureValid)
+
