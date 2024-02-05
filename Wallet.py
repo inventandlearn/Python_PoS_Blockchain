@@ -1,6 +1,7 @@
 from Crypto.PublicKey import RSA
 from Crypto.Signature import PKCS1_v1_5
 from BlockchainUtils import BlockchainUtils
+from Transaction import Transaction
 
 
 # Wallet object that is necessary for parties to transact on blockchain.
@@ -32,4 +33,10 @@ class Wallet():
         publicKeyString = self.keyPair.publickey().exportKey('PEM').decode('utf-8')
         return publicKeyString
 
+# Method that initiates a transaction within the sender's wallet.
+    def createTransaction(self, receiver, amount, type):
+        transaction = Transaction(self.publicKeyString(), receiver, amount, type)
+        signature = self.sign(transaction.payload())
+        transaction.sign(signature)
+        return transaction
 
