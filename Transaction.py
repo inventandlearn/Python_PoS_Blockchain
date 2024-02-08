@@ -4,7 +4,7 @@ import copy
 
 
 # Transaction class with attributes that uniquely details a transaction on the block. The transaction object is
-# a funciton of a block. One of the core aspects of Blockchain.
+# a function of a block. One of the core aspects of Blockchain.
 class Transaction():
 
     def __init__(self, senderPublicKey, receiverPublicKey, amount, type):
