@@ -9,11 +9,8 @@ if __name__ == '__main__':
     amount = 1
     type = 'TRANSFER'
 
-    transaction = Transaction(sender, receiver, amount, type)
-    wallet = Wallet()
-    signature = wallet.sign(transaction.toJSON())
-    transaction.sign(signature)
-
-    signatureValid = Wallet.signatureValid(transaction.toJSON(), signature, wallet.publicKeyString())
-    print(signatureValid)
-
+wallet = Wallet()
+fraudulentWallet = Wallet()
+transaction = wallet.createTransaction(receiver, amount, type)
+signatureValid = Wallet.signatureValid(transaction.payload(), transaction.signature, fraudulentWallet.publicKeyString())
+print(signatureValid)
