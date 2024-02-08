@@ -31,3 +31,10 @@ class Transaction():
         jsonRepresentation = copy.deepcopy(self.toJSON())
         jsonRepresentation['signature'] = ''
         return jsonRepresentation
+
+# Method that is used to confirm the existence of a transaction so that it can be added to a transaction pool.
+    def equals(self, transaction):
+        if self.id == transaction.id:
+            return True
+        else:
+            return False
