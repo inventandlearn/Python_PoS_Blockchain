@@ -26,7 +26,7 @@ class Transaction():
         self.signature = signature
 
 # Method that keeps signature consistent with each transaction initiated.
-# In other words the signature of the last transaction doesn't carry over to this following transaction.
+# In other words the signature of the last transaction doesn't carry over to the following transaction.
     def payload(self):
         jsonRepresentation = copy.deepcopy(self.toJSON())
         jsonRepresentation['signature'] = ''
