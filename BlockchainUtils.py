@@ -3,7 +3,7 @@ import json
 
 
 # This class is used to produce hash outputs from JSON formatted inputs.
-# Hash outputs neccessary for signature generation.
+# Hash outputs are necessary to uniquely id transactions within the blockchain network.
 class BlockchainUtils():
 
     @staticmethod
