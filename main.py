@@ -1,7 +1,9 @@
 from Transaction import Transaction
 from Wallet import Wallet
+from TransactionPool import TransactionPool
 
-# Script which instantiates Transaction class and Wallet class. Also validates if signature is by originator of transaction or not.
+# Script which instantiates Transaction Pool class, then demonstrates how a newly created transaction is added to the Transaction Pool.
+# It also demonstrates that a duplicate transaction cannot be added to the Transaction Pool.
 if __name__ == '__main__':
 
     sender = 'sender'
@@ -11,6 +13,13 @@ if __name__ == '__main__':
 
 wallet = Wallet()
 fraudulentWallet = Wallet()
+pool = TransactionPool()
 transaction = wallet.createTransaction(receiver, amount, type)
-signatureValid = Wallet.signatureValid(transaction.payload(), transaction.signature, fraudulentWallet.publicKeyString())
-print(signatureValid)
+
+if pool.transactionExists(transaction) == False:
+    pool.addTransaction(transaction)
+
+if pool.transactionExists(transaction) == False:
+    pool.addTransaction(transaction)
+
+print(pool.transactions)
