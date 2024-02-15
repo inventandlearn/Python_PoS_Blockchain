@@ -31,6 +31,11 @@ class Block():
 # After each Block object is added to the chain with a unique signature the next Block instantiated has it's signature reset to an empty string.
 # Once the block has been successfully added to the chain, the signature created will fill the empty string.
     def payload(self):
-        jsonRepresentation = copy.deepcopy(self.toJSON)
+        jsonRepresentation = copy.deepcopy(self.toJSON())
         jsonRepresentation['signature'] = ''
         return jsonRepresentation
+
+# This method is accessed by the Wallet object so that a signature can be generated separately and assigned to the Block object.
+    def sign(self, signature):
+        self.signature = signature
+
