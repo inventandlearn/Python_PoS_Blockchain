@@ -3,8 +3,7 @@ from Wallet import Wallet
 from TransactionPool import TransactionPool
 from Block  import Block
 
-# Script which instantiates Block class, then demonstrates how transactions are extracted from the Transaction Pool object and then pacakaged into
-# a Block object. This Block object has its own attributes which list x amount of transactions, it's blockcount, hash, etc.
+# Script which instantiates Block class, then demonstrates how a signature is generated then subsequently assigned to Block object.
 if __name__ == '__main__':
 
     sender = 'sender'
@@ -20,5 +19,5 @@ transaction = wallet.createTransaction(receiver, amount, type)
 if pool.transactionExists(transaction) == False:
     pool.addTransaction(transaction)
 
-block = Block(pool.transactions, 'lastHash', 'forger', 1)
+block = wallet.createBlock(pool.transactions, 'lastHash', 1)
 print(block.toJSON())
