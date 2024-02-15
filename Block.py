@@ -27,7 +27,6 @@ class Block():
         data['transactions'] = jsonTransactions
         return data
 
-
 # Method that keeps signature consistent for each Block. In other words the signature of the last Block doesn't carry over to the following Block.
 # After each Block object is added to the chain with a unique signature the next Block instantiated has it's signature reset to an empty string.
 # Once the block has been successfully added to the chain, the signature created will fill the empty string.
