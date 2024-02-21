@@ -5,7 +5,7 @@ from Block  import Block
 from Blockchain import Blockchain
 import pprint
 
-# Script which instantiates Block class, then demonstrates how a signature is validated as false or true based on the public key string passed through.
+# Script which instantiates Block class, then demonstrates how a block is added to the Blockchain object.
 # Added structure to how data is printed to console/terminal with pprint module.
 if __name__ == '__main__':
 
@@ -23,5 +23,6 @@ if pool.transactionExists(transaction) == False:
     pool.addTransaction(transaction)
 
 block = wallet.createBlock(pool.transactions, 'lastHash', 1)
-signatureValid = Wallet.signatureValid(block.payload(), block.signature, fraudulentWallet.publicKeyString())
-print(signatureValid)
+blockchain = Blockchain()
+blockchain.addBlock(block)
+pprint.pprint(blockchain.toJSON())
