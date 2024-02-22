@@ -5,7 +5,7 @@ from Block  import Block
 from Blockchain import Blockchain
 import pprint
 
-# Script which instantiates Block class, then demonstrates how a block is added to the Blockchain object.
+# Script which instantiates Block class, then demonstrates how a genesis block is added to the Blockchain object.
 # Added structure to how data is printed to console/terminal with pprint module.
 if __name__ == '__main__':
 
@@ -24,5 +24,4 @@ if pool.transactionExists(transaction) == False:
 
 block = wallet.createBlock(pool.transactions, 'lastHash', 1)
 blockchain = Blockchain()
-blockchain.addBlock(block)
 pprint.pprint(blockchain.toJSON())
