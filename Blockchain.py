@@ -1,4 +1,5 @@
 from Block import Block
+from BlockchainUtils import BlockchainUtils
 
 # The Blockchain object acts as a linked list that connects every new block created to previous blocks.
 class Blockchain():
@@ -16,5 +17,20 @@ class Blockchain():
         jsonBlocks = []
         for block in self.blocks:
             jsonBlocks.append(block.toJSON())
-            data['blocks'] = jsonBlocks
-            return data
+        data['blocks'] = jsonBlocks
+        return data
+
+#
+    def blockCountValid(self, block):
+        if self.blocks[-1].blockCount == block.blockCount - 1:
+            return True
+        else:
+            return False
+
+#
+    def lastBlockHashValid(self, block):
+        latestBlockchainBlockHash = BlockchainUtils.hash(self.blocks[-1].payload()).hexdigest()
+        if latestBlockchainBlockHash == block.lastHash:
+            return True
+        else:
+            return False

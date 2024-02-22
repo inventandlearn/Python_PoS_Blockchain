@@ -6,11 +6,11 @@ import copy
 class Block():
 
     def __init__(self, transactions, lastHash, forger, blockCount):
+        self.blockCount = blockCount
         self.transactions = transactions
         self.lastHash = lastHash
-        self.forger = forger
-        self.blockCount = blockCount
         self.timestamp = time.time()
+        self.forger = forger
         self.signature = ''
 
 # This static method generates a genesis block. The genesis block is the first block of the blockchain. It's timestamp is set to 0
@@ -25,11 +25,11 @@ class Block():
 # This method returns attributes of the Block object in a dictionary format.
     def toJSON(self):
         data = {}
-        data['lastHash'] = self.lastHash
-        data['forger'] = self.forger
         data['blockCount'] = self.blockCount
-        data['timestamp'] = self.timestamp
+        data['lastHash'] = self.lastHash
         data['signature'] = self.signature
+        data['forger'] = self.forger
+        data['timestamp'] = self.timestamp
         jsonTransactions = []
         for transaction in self.transactions:
             jsonTransactions.append(transaction.toJSON())

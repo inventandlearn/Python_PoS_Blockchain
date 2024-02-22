@@ -4,6 +4,7 @@ from TransactionPool import TransactionPool
 from Block  import Block
 from Blockchain import Blockchain
 import pprint
+from BlockchainUtils import BlockchainUtils
 
 # Script which instantiates Block class, then demonstrates how a genesis block is added to the Blockchain object.
 # Added structure to how data is printed to console/terminal with pprint module.
@@ -22,6 +23,16 @@ transaction = wallet.createTransaction(receiver, amount, type)
 if pool.transactionExists(transaction) == False:
     pool.addTransaction(transaction)
 
-block = wallet.createBlock(pool.transactions, 'lastHash', 1)
 blockchain = Blockchain()
+lastHash = BlockchainUtils.hash(blockchain.blocks[-1].payload()).hexdigest()
+blockCount = blockchain.blocks[-1].blockCount + 1
+block = wallet.createBlock(pool.transactions, lastHash, blockCount)
+
+if not blockchain.lastBlockHashValid(block):
+    print('lastBlockHash is not valid')
+elif not blockchain.blockCountValid(block):
+    print('Blockcount is not valid')
+elif blockchain.lastBlockHashValid(block) and blockchain.blockCountValid(block):
+    blockchain.addBlock(block)
+
 pprint.pprint(blockchain.toJSON())
