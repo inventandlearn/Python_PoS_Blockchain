@@ -20,14 +20,14 @@ class Blockchain():
         data['blocks'] = jsonBlocks
         return data
 
-#
+# This method validates whether or not a block is subsequent to the previous block by one unit.
     def blockCountValid(self, block):
         if self.blocks[-1].blockCount == block.blockCount - 1:
             return True
         else:
             return False
 
-#
+# This method validates that the new block being added to the blockchain has the last block's hash.
     def lastBlockHashValid(self, block):
         latestBlockchainBlockHash = BlockchainUtils.hash(self.blocks[-1].payload()).hexdigest()
         if latestBlockchainBlockHash == block.lastHash:
