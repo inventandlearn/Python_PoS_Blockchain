@@ -4,7 +4,7 @@ from Block import Block
 class Blockchain():
 
     def __init__(self):
-        self.blocks = [Block.genesis(self)]
+        self.blocks = [Block.genesis()]
 
 # This method adds each block created to a linked list of previously created blocks.
     def addBlock(self, block):

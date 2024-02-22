@@ -16,7 +16,7 @@ class Block():
 # This static method generates a genesis block. The genesis block is the first block of the blockchain. It's timestamp is set to 0
 # so that it can be easily identified as the genesis block within the Blockchain.
     @staticmethod
-    def genesis(self):
+    def genesis():
         genesisBlock = Block([], 'genesisHash', 'genesis', 0)
         genesisBlock.timestamp = 0
         return genesisBlock
