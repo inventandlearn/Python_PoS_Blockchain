@@ -6,7 +6,8 @@ from Blockchain import Blockchain
 import pprint
 from BlockchainUtils import BlockchainUtils
 
-# Script which instantiates Block class, then demonstrates how a genesis block is added to the Blockchain object.
+# Script which instantiates Block class, then demonstrates how a block is added to the Blockchain object after the genesis block has been added.
+# Validation methods are implemented to ensure each block being added corresponds to the previous blockCount and hash.
 # Added structure to how data is printed to console/terminal with pprint module.
 if __name__ == '__main__':
 
