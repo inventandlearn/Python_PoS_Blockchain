@@ -1,11 +1,13 @@
 from Block import Block
 from BlockchainUtils import BlockchainUtils
+from AccountModel import AccountModel
 
 # The Blockchain object acts as a linked list that connects every new block created to previous blocks.
 class Blockchain():
 
     def __init__(self):
         self.blocks = [Block.genesis()]
+        self.accountModel = AccountModel()
 
 # This method adds each block created to a linked list of previously created blocks.
     def addBlock(self, block):
@@ -31,6 +33,24 @@ class Blockchain():
     def lastBlockHashValid(self, block):
         latestBlockchainBlockHash = BlockchainUtils.hash(self.blocks[-1].payload()).hexdigest()
         if latestBlockchainBlockHash == block.lastHash:
+            return True
+        else:
+            return False
+
+# This method iterates through a list of transactions and checks if the sender has a sufficient balance to cover the respective transaction.
+    def getCoveredTransactionSet(self, transactions):
+        coveredTransactions = []
+        for transaction in transactions:
+            if self.transactionCovered(transaction):
+                coveredTransactions.append(transaction)
+            else:
+                print("These transactions cannot be completed. Balances of senders are insufficient!")
+        return coveredTransactions
+
+# This method check is the sender has a sufficient balance to cover a TRANSFER type transaction.
+    def transactionCovered(self, transaction):
+        senderBalance = self.accountModel.getBalance(transaction.senderPublicKey)
+        if senderBalance >= transaction.amount:
             return True
         else:
             return False
