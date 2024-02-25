@@ -15,7 +15,7 @@ class AccountModel():
     def getBalance(self, publicKeyString):
         if publicKeyString not in self.accounts:
             self.addAccount(publicKeyString)
-        return self.balances(publicKeyString)
+        return self.balances[publicKeyString]
 
 # This method updates the balance of a given wallet and it's corresponding publicKeyString after it has transacted on the blockchain.
     def updateBalance(self, publicKeyString, amount):
