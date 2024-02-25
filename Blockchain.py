@@ -11,6 +11,7 @@ class Blockchain():
 
 # This method adds each block created to a linked list of previously created blocks.
     def addBlock(self, block):
+        self.executeTransactions(block.transactions)
         self.blocks.append(block)
 
 # This method returns a dictionary of all the blocks that have been added to the Blockchain object.
@@ -56,3 +57,16 @@ class Blockchain():
             return True
         else:
             return False
+
+# This method iterates through a list of transactions waiting to be executed.
+    def executeTransactions(self, transactions):
+        for transaction in transactions:
+            self.executeTransaction(transaction)
+
+# This method executes a transaction by updating the balance(s) of the parties/wallet(s) involved in the transaction with the account model object method.
+    def executeTransaction(self, transaction):
+        sender = transaction.senderPublicKey
+        receiver = transaction.receiverPublicKey
+        amount = transaction.amount
+        self.accountModel.updateBalance(sender, -amount)
+        self.accountModel.updateBalance(receiver, amount)
