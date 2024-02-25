@@ -7,12 +7,18 @@ import pprint
 from BlockchainUtils import BlockchainUtils
 from AccountModel import AccountModel
 
-# Script which instantiates Account Model object hereby showing the balance of each wallet and it's corresponding publicKeyString.
+# Script which demonstrates covered transactions vs transactions that aren't covered with the Account Model object and blockchain methods"
 if __name__ == '__main__':
 
-    wallet = Wallet()
-    accountModel = AccountModel()
-    accountModel.updateBalance(wallet.publicKeyString(), 10)
-    accountModel.updateBalance(wallet.publicKeyString(), -5)
+    blockchain = Blockchain()
+    pool = TransactionPool()
 
-    print(accountModel.balances)
+    alice = Wallet()
+    bob = Wallet()
+
+    transaction = alice.createTransaction(bob.publicKeyString(), 5, 'TRANSFER')
+    if not pool.transactionExists(transaction):
+        pool.addTransaction(transaction)
+
+    coveredTransaction = blockchain.getCoveredTransactionSet(pool.transactions)
+    print(coveredTransaction)
