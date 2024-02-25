@@ -44,11 +44,13 @@ class Blockchain():
             if self.transactionCovered(transaction):
                 coveredTransactions.append(transaction)
             else:
-                print("These transactions cannot be completed. Balances of senders are insufficient!")
+                print("These transactions cannot be completed. Balance(s) of senders are insufficient!")
         return coveredTransactions
 
-# This method check is the sender has a sufficient balance to cover a TRANSFER type transaction.
+# This method checks if the sender has a sufficient balance to cover a TRANSFER type transaction. It also checks if the transaction is of type EXCHANGE.
     def transactionCovered(self, transaction):
+        if transaction.type == 'EXCHANGE':
+            return True
         senderBalance = self.accountModel.getBalance(transaction.senderPublicKey)
         if senderBalance >= transaction.amount:
             return True
