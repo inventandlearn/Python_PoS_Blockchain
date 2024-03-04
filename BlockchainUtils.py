@@ -1,5 +1,6 @@
 from Crypto.Hash import SHA256
 import json
+import jsonpickle
 
 
 # This class is used to produce hash outputs from JSON formatted inputs.
@@ -12,3 +13,14 @@ class BlockchainUtils():
         dataBytes = dataString.encode('utf-8')
         dataHash = SHA256.new(dataBytes)
         return dataHash
+
+
+# This method encodes an object that is passed through into a JSON format.
+    @staticmethod
+    def encode(objecToEncode):
+        return jsonpickle.encode(objecToEncode, unpicklable=True)
+
+# This method decodes an object that has been encoded into a JSON format to it's original state/form.
+    @staticmethod
+    def decode(encodedObject):
+        return jsonpickle.decode(encodedObject)
