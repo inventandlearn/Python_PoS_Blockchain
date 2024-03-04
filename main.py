@@ -7,10 +7,13 @@ import pprint
 from BlockchainUtils import BlockchainUtils
 from AccountModel import AccountModel
 from Node import Node
+import sys
 
-# Script which instantiates the Node object which will be the access point for users to interact with the Blockchain, and it's various componenets.
+# Script which instantiates the Node object with SocketCommunication attributes then passes through an ip and port. The startP2P method is then called to initiate communication.
 if __name__ == '__main__':
-    node = Node()
-    print(node.blockchain)
-    print(node.transactionPool)
-    print(node.wallet)
+
+    ip = sys.argv[1]
+    port = int(sys.argv[2])
+
+    node = Node(ip, port)
+    node.startP2P()
