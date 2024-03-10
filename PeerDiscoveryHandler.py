@@ -23,8 +23,13 @@ class PeerDiscoveryHandler():
             print('Status')
             time.sleep(10)
 
-# This method sends a broadcast message to all nodes within the blockchain network as to what connections a subject node has established with other nodes.
+# This method ensures that all nodes within the blockchain network can find and establish connections with other nodes that have been newly added.
     def discovery(self):
         while True:
             print('Discovery')
             time.sleep(10)
+
+# This method confirms that both nodes are connected and are ready to exchange information.
+    def handshake(self, connected_node):
+        self.socketCommunication.send(connected_node, 'Handshake....')
+
