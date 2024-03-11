@@ -31,5 +31,16 @@ class PeerDiscoveryHandler():
 
 # This method confirms that both nodes are connected and are ready to exchange information.
     def handshake(self, connected_node):
-        self.socketCommunication.send(connected_node, 'Handshake....')
+        handshakeMessage = self.handshakeMessage()
+        self.socketCommunication.send(connected_node, handshakeMessage)
 
+# This method formats the message that will be sent once there is a handshake between two nodes.
+# The format will structure the message to include messageType, data or the list of peers that exist on network, etc.
+    def handshakeMessage(self):
+        ownConnector = self.socketCommunication.socketConnector
+        ownPeers = self.socketCommunication.peers
+        data = ownPeers
+        messageType = 'Discovery'
+        message = Message(ownConnector, messageType, data)
+        encodedMessaage = BlockchainUtils.encode(message)
+        return encodedMessaage
