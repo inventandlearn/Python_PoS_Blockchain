@@ -17,8 +17,8 @@ class BlockchainUtils():
 
 # This method encodes an object that is passed through into a JSON format.
     @staticmethod
-    def encode(objecToEncode):
-        return jsonpickle.encode(objecToEncode, unpicklable=True)
+    def encode(objectToEncode):
+        return jsonpickle.encode(objectToEncode, unpicklable=True)
 
 # This method decodes an object that has been encoded into a JSON format to it's original state/form.
     @staticmethod
