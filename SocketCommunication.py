@@ -1,6 +1,8 @@
 from p2pnetwork.node import Node
 from PeerDiscoveryHandler import PeerDiscoveryHandler
 from SocketConnector import SocketConnector
+from BlockchainUtils import BlockchainUtils
+import json
 
 # The SocketCommunication object is utilized by different nodes within the blockchain network to discover and connect to each other for transactions, and data exchange.
 class SocketCommunication(Node):
@@ -33,16 +35,18 @@ class SocketCommunication(Node):
 
 # This method sends messages between nodes that have established a connection with each other.
     def node_message(self, connected_node, message):
-        print(message)
+        message = BlockchainUtils.decode(json.dumps(message))
+        if message.messageType == 'Discovery':
+            self.peerDiscoveryHandler.handleMessage(message)
 
 # This method allows for the sending of messages to specific nodes that aren't directly connected.
 # The differentiation between this method and the node_message method is the directional flow of
 # messages between all nodes present on the network. So a message sent between two connected nodes or a message sent
-# by two or more unconnected nodes that however at still peers.
+# by two or more unconnected nodes that however are still peers.
     def send(self, receiver, message):
         self.send_to_node(receiver, message)
 
-# This method broadcast allows for the broadcasting of messages to all nodes within the network.
+# This method allows for the broadcasting of messages to all nodes within the network.
     def broadcast(self, message):
         self.send_to_nodes(message)
 
