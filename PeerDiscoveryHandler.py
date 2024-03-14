@@ -20,13 +20,16 @@ class PeerDiscoveryHandler():
 # This method sends a broadcast message to all nodes within the blockchain network as to whether or not a subject node is connected or disconnected.
     def status(self):
         while True:
-            print('Status')
-            time.sleep(10)
+            print('Current Connections:')
+            for peer in self.socketCommunication.peers:
+                print(str(peer.ip) + ':' + str(peer.port))
+            time.sleep(5)
 
 # This method ensures that all nodes within the blockchain network can find and establish connections with other nodes that have been newly added.
     def discovery(self):
         while True:
-            print('Discovery')
+            handshakeMessage = self.handshakeMessage()
+            self.socketCommunication.broadcast(handshakeMessage)
             time.sleep(10)
 
 # This method confirms that both nodes are connected and are ready to exchange information.
@@ -42,5 +45,25 @@ class PeerDiscoveryHandler():
         data = ownPeers
         messageType = 'Discovery'
         message = Message(ownConnector, messageType, data)
-        encodedMessaage = BlockchainUtils.encode(message)
-        return encodedMessaage
+        encodedMessage = BlockchainUtils.encode(message)
+        return encodedMessage
+
+# This method handles incoming messages, updating the list of known peers, and establishes connections with new peers if neccessary.
+# It ensures that the subject node doesn't connect with itself and avoids adding duplicate peers to the list.
+    def handleMessage(self, message):
+        peersSocketConnector = message.senderConnector
+        peersPeerList = message.data
+        newPeer = True
+        for peer in self.socketCommunication.peers:
+            if peer.equals(peersSocketConnector):
+                newPeer = False
+        if newPeer:
+            self.socketCommunication.peers.append(peersSocketConnector)
+
+        for peersPeer in peersPeerList:
+            peerKnown = False
+            for peer in self.socketCommunication.peers:
+                if peer.equals(peersPeer):
+                    peerKnown = True
+            if not peerKnown and not peersPeer.equals(self.socketCommunication.socketConnector):
+                self.socketCommunication.connect_with_node(peersPeer.ip, peersPeer.port)
