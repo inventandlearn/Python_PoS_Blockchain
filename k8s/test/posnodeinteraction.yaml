@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: posblockinteraction-pod
+  namespace: posblockchain
+spec:
+  containers:
+  - name: pythonblockinteraction
+    image: registry.gitlab.com/inventandlearn/k8s-blockchain-prototype/nodeinteraction:latest
+    command: ["sleep", "infinity"]
+  imagePullSecrets:
+  - name: posblock-secret
+
+

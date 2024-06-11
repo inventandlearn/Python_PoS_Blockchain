@@ -1,0 +1,17 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: posblockmain-pod
+  namespace: posblockchain
+  labels:
+    app: posblockmain-pod
+spec:
+  containers:
+  - name: pythonblockmain
+    image: registry.gitlab.com/inventandlearn/k8s-blockchain-prototype/nodemain:latest
+    ports:
+    - containerPort: 5000
+    - containerPort: 10001
+  imagePullSecrets:
+  - name: posblock-secret
+

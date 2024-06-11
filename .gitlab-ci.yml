@@ -1,0 +1,36 @@
+variables:
+   KUBE_CONTEXT: inventandlearn/k8s-blockchain-connection:k8s-block-connection
+
+stages:
+  - Build
+  - Deploy
+
+
+# Build and Push Docker Images
+Build and Push Images:
+  stage: Build
+  image: docker:latest
+  services:
+    - docker:dind
+  script:
+    - docker build -t nodemain:latest .
+    - docker build -t nodeinteraction:latest ./NodeInteraction
+    - echo "$CI_JOB_TOKEN" | docker login $CI_REGISTRY -u $CI_REGISTRY_USER --password-stdin
+    - docker tag nodemain:latest $CI_REGISTRY_IMAGE/nodemain:latest
+    - docker push $CI_REGISTRY_IMAGE/nodemain:latest
+    - docker tag nodeinteraction:latest $CI_REGISTRY_IMAGE/nodeinteraction:latest
+    - docker push $CI_REGISTRY_IMAGE/nodeinteraction:latest
+
+
+# Deploy to Minikube
+Deploy To Minikube:
+  stage: Deploy
+  image:
+    name: bitnami/kubectl:latest
+    entrypoint: ['']
+  script:
+    - kubectl config use-context $KUBE_CONTEXT
+    - kubectl get pods
+    - kubectl get nodes -o wide
+    - echo "Deploying to K8s"
+    - kubectl apply
