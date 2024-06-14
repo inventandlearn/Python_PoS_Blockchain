@@ -3,6 +3,7 @@ variables:
 
 stages:
   - Build
+  - Test
   - Deploy
 
 
@@ -22,6 +23,18 @@ Build and Push Images:
     - docker push $CI_REGISTRY_IMAGE/nodeinteraction:latest
 
 
+# Test Minikube
+Test Minikube:
+  stage: Test
+  image:
+    name: bitnami/kubectl:latest
+    entrypoint: ['']
+  script:
+    - minikube status
+    - kubectl config use-context $KUBE_CONTEXT
+    - kubectl get nodes -o wide
+
+
 # Deploy to Minikube
 Deploy To Minikube:
   stage: Deploy
@@ -30,7 +43,7 @@ Deploy To Minikube:
     entrypoint: ['']
   script:
     - kubectl config use-context $KUBE_CONTEXT
+    - echo "Deploying PoS Blockchain Prototype to K8s"
+    - kubectl apply -f $CI_PROJECT_DIR/k8s/test
     - kubectl get pods
-    - kubectl get nodes -o wide
-    - echo "Deploying to K8s"
-    - kubectl apply
+    - kubectl get svc
